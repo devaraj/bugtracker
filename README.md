@@ -1,0 +1,4 @@
+bugtracker
+==========
+
+rails-bugtracker
