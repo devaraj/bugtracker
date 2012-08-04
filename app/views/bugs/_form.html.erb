@@ -1,0 +1,64 @@
+<%= form_for(@bug,:html=>{:id=>'createbugform',:multipart=>true}) do |f| %>
+<%=@notice%>
+<% if @bug.errors.any? %>
+  <div style="color:red">
+    <ul>
+    <% @bug.errors.full_messages.each do |msg| %>
+      <li><%= msg %> </li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+  <div class="gradientBoxesWithOuterShadows">
+  <table>
+    <tr>
+      <td>  <%= f.label :bugtitle %><span style="color:red">*</span> </td> 
+      <td>  <%= f.text_field :bugtitle ,{:style=>"width:95%"}%></td>  <td>  To<span style="color:red">*</span> </td> 
+      <td>  <%= f.collection_select :assignedto_user_id,@users,:id,:username,:prompt => "Assigned To" %></td>
+    </tr>
+     <tr>
+      <td>
+    <%= f.label :bugdescription %><span style="color:red">*</span><br />
+	</td>	
+	<td>
+    <%= f.text_area :bugdescription %>
+	</td>
+	 <td>
+    Labels
+	</td>	
+	<td>
+     <%= f.collection_select  :label_ids,@labels,:id,:labelname,{},{:multiple => true , :size => 15}%>
+	</td>
+	</tr> 
+	<tr>
+		<td>
+			File upload
+		</td>
+		<td>
+			<%= file_field_tag "fileuploadpath"%>
+		</td>
+  
+	</tr>
+  <% if !@bug.fileuploadpath.nil? and !@bug.fileuploadpath.empty? %>
+  <tr>
+    <td>
+    </td>
+    <td>
+      <%= check_box_tag  "keepold"%> <span style="font-weight:bold;color:blue"> Keep old file <%= @bug.fileuploadpath.split("/")[-1] %></span>
+    </td>
+  </tr>
+ <% end %>
+   </table>
+  
+  </div>
+	
+  
+ 
+  </div>
+  
+  
+  
+  
+<% end %>

@@ -1,0 +1,79 @@
+<h1><%= @notice%></h1>
+
+<div class="gradientBoxesWithOuterShadows" >
+  
+ <%= link_to @allopenissuse.to_s+' Open Issue' ,openissue_path,:class=>"button gray"%>&nbsp;<%= link_to @allclosedissuse.to_s+' Closed Issue' ,closedissue_path,:class=>"button gray"%> 
+ <%= link_to @allfixedissuse.to_s+' Fixed Issue' ,fixedissue_path,:class=>"button gray"%> 
+ <%= link_to @allreopenedissuse.to_s+' ReOpened Issue' ,reopenedissue_path,:class=>"button gray"%> 
+ <div style="float:right">
+ <%= paginate @bugs %>
+ </div>
+ 
+<% @bugs.each do |bug| %>
+ 		
+ 		<div class="bugsmaindiv" >
+			<div style="padding:5px;width:100%;">	
+				
+				  <span style="font-size: 12px; font-weight: bold; color: black;"><span></span>  #<%=bug.id %> </span><span style="margin-left:10px;margin-right:5px;word-wrap:break-word"> <%= bug.bugtitle %>
+				<% if bug.labels %>
+			 		<% bug.labels.each do |label|%>
+					<label class="button <%=label.labelcolor %>">
+						<%=label.labelname%>
+					</label>
+					<% end %>
+				<% end %>	
+				 </span> 
+				 
+				  <br/>
+				  <span  style="margin-left:35px;font-size: 12px; font-weight: bold; color: gray;">by &nbsp;
+			 
+						<%=bug.assignedby_user.username %></span>
+			</div> 
+			<div  class="bugdivheader">
+			<span style="margin-left:10px;font-size: 12px; font-weight: bold;color:black"> <%= bug.status %> 
+				
+				</span> 
+				<div style="float:right;margin-right:10px">
+				<% if !bug.fileuploadpath.nil? and !bug.fileuploadpath.empty? %> 
+				 
+				<% imagetype = (bug.fileuploadpath.split("/")[-1]).split(".")[-1]
+					if ["jpg","jpeg","png","bmp"].include?(imagetype.downcase)
+						image = "pic.png"
+					elsif ["doc","docx"].include?(imagetype.downcase)
+						image = "word.png"
+					elsif ["txt"].include?(imagetype.downcase)
+						image = "txt.png"
+					elsif ["xls","xlsx"].include?(imagetype.downcase)
+						image = "excel.png"
+					elsif ["pdf"].include?(imagetype.downcase)
+						image = "pdf.png"
+					else
+						image = "download-icon.png"	
+					end
+				%>
+				<%= link_to  image_tag( image,:action => 'download'),{:controller=>"bugs", :action=>"download",:filename=>bug.fileuploadpath}  %>
+				<%= link_to  bug.fileuploadpath.split("/")[-1],{:controller=>"bugs", :action=>"download",:filename=>bug.fileuploadpath}  %>
+				 
+			 &nbsp;&nbsp; | &nbsp;
+				<%end%>
+				 <% if session[:user_id] ==
+						bug.assignedby_user.id %>   <%= link_to 'Edit', edit_bug_path(bug)
+						%> | <%= link_to 'Destroy', bug, method: :delete, data: { confirm:
+						'Are you sure?' } %> | <% end %>  
+					
+							 <%= image_tag "comments.jpg"  %>
+							<%= link_to 'Comments',addcomments_path(:id=>bug.id) %> <%= bug.comments.size %>
+						</div>
+			</div>
+				 
+		</div>
+	 		 
+			  
+	 
+
+ <% end %>
+</div>
+<br />
+
+
+

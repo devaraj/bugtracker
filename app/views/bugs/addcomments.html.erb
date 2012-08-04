@@ -1,0 +1,90 @@
+<% if @comment.bug %>
+  		 
+	 
+		<div class="commentmaindiv" >
+		<span style="font-weight:bold;color:#4183C4;padding:5px;"> <%=@comment.bug.assignedby_user.username %></span> opened the defect on <%=@comment.bug.created_at %>
+		<div  class="divheader">
+			<span style="font-weight:bold;font-size:small;word-wrap:break-word"><%=@comment.bug.bugtitle %> </span> 
+		</div> 
+		<div style="padding:5px;width:100%;min-height:50px; word-wrap: break-word">	
+			 <%=@comment.bug.bugdescription %>
+		</div>
+				 
+		</div>
+		<br/>
+	 
+	 
+ 
+<% end %>
+<% if @comments %>
+  		 
+	<% @comments.each  do |comm| %>
+		<div class="commentmaindiv" >
+		<div  class="divheader">
+			<span style="font-weight:bold;color:#4183C4"> <%=comm.user.username %> </span> commented  
+			 
+			<% if comm.bugstatus == "Closed" %>
+			<label class="button darkblue">Closed</label>
+			<% elsif comm.bugstatus == "Fixed" %>
+			<label class="button lightgreen">Fixed</label>
+			<% elsif comm.bugstatus == "ReOpened" %>
+			<label class="button orange">ReOpened</label>
+			<% end %>
+		 
+		</div> 
+		<div style="width:100%;min-height:50px;word-wrap:break-word;margin-right:5px">	
+			 <%=comm.content %>
+		</div>
+		<div  class="divfooter">
+			<%=comm.created_at%>
+		</div>
+		</div>
+		<br/>
+	 
+	<% end %>
+ 
+<% end %>
+
+
+<%= form_for @comment,:url => comments_path(:comment=>@comment) do |f| %>
+  <div class="commentgradientBoxesWithOuterShadows">
+
+  <div class="commentmaindiv" >
+ 		 <div  class="divheader">Write Comments <%=session[:user].username%>
+ 		 <%= hidden_field_tag 'bugstat'%>
+ 		 <%= hidden_field_tag 'bugid',@comment.bug.id%>
+ 		
+ 		<% if ["Open","ReOpened"].include? @comment.bug.status %>
+			<%= link_to "Fix with Comments","#",:onclick=>"javascript:document.getElementById('bugstat').value='Fixed';document.getElementById('new_comment').submit()",:class=>"button lightgreen" %> 
+			<%end%>
+		<% if @comment.bug.assignedby_user_id == session[:user_id] %>
+		  	 <% if  @comment.bug.status == "Fixed"%>
+		  	 	<%= link_to "Close with Comments","#",:onclick=>"javascript:document.getElementById('bugstat').value='Closed';document.getElementById('new_comment').submit()",:class=>"button green" %>
+				<%end%>
+		  	 
+				<% if @comment.bug.status == "Closed" %>
+		  	 		<%= link_to "ReOpen with Comments","#",:onclick=>"javascript:document.getElementById('bugstat').value='ReOpened';document.getElementById('new_comment').submit()",:class=>"button red" %>
+				<%end%>
+		<% end %>
+ 		 </div>
+	 		 <div style="padding:5px;width:100%;min-height:50px;">	
+	   		   <%= f.text_area :content ,:cols=>"70",:rows=>"10"%></div>
+		      	 
+
+		      	<%= link_to "Comment","#",:onclick=>"javascript:document.getElementById('new_comment').submit()",:class=>"button blue" %>
+		 	 
+		  	 	
+		 
+				   <%= link_to 'Back', :back,:class=>"button blue" %>
+	  	 	</div>
+	  	 	
+	  	 </div>
+	    
+ </div>
+ </div>
+ 
+<% end %>
+
+ 
+
+

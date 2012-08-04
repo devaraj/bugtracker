@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  projectname: MyString
+  projectdescription: MyText
+  projectstartdate: 2012-07-02
+  projectenddate: 2012-07-02
+  status: MyString
+  created_at: 2012-07-02
+  created_by: MyString
+  updated_at: 2012-07-02
+  updated_by: MyString
+
+two:
+  projectname: MyString
+  projectdescription: MyText
+  projectstartdate: 2012-07-02
+  projectenddate: 2012-07-02
+  status: MyString
+  created_at: 2012-07-02
+  created_by: MyString
+  updated_at: 2012-07-02
+  updated_by: MyString

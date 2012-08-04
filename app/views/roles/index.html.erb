@@ -1,0 +1,31 @@
+<h1>Roles</h1>
+
+<table>
+  <tr>
+    <th>Rolename</th>
+    <th>Created at</th>
+    <th>Created by</th>
+    <th>Updated at</th>
+    <th>Updated by</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @roles.each do |role| %>
+  <tr>
+    <td><%= role.rolename %></td>
+    <td><%= role.created_at %></td>
+    <td><%= role.created_by %></td>
+    <td><%= role.updated_at %></td>
+    <td><%= role.updated_by %></td>
+    <td><%= link_to 'Show', role %></td>
+    <td><%= link_to 'Edit', edit_role_path(role) %></td>
+    <td><%= link_to 'Destroy', role, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Role', new_role_path %>

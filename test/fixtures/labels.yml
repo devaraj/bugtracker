@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  labelname: MyString
+  status: MyString
+  created_at: 2012-07-12
+  created_by: MyString
+  updated_at: 2012-07-12
+  updated_by: MyString
+
+two:
+  labelname: MyString
+  status: MyString
+  created_at: 2012-07-12
+  created_by: MyString
+  updated_at: 2012-07-12
+  updated_by: MyString

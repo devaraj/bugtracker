@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Username:</b>
+  <%= @user.username %>
+</p>
+
+<p>
+  <b>Password:</b>
+  <%= @user.password %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @user.email %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%= @user.created_at %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @user.created_by %>
+</p>
+
+<p>
+  <b>Updated at:</b>
+  <%= @user.updated_at %>
+</p>
+
+<p>
+  <b>Updated by:</b>
+  <%= @user.updated_by %>
+</p>
+
+<p>
+  <b>Role:</b>
+  <%= @user.role.rolename %>
+</p>
+
+<p>
+  <b>Session:</b>
+  <%= @sessionid %>
+</p>
+<p>
+  <b>Projects:</b>
+  <% @user.projects.each do |project| %>
+  <ui> 
+    <li><%=project.projectname %></li>
+  </ui>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

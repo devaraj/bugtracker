@@ -1,0 +1,31 @@
+ <%= form_tag( :action=>'authenticate') do %>
+<div class="field">
+<% if @user and @user.errors.any? %>
+  <div style="color:red">
+    <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %> </li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+</div>
+  <div class="field">
+   Username<br />
+    <%= text_field_tag :username %>
+  </div>
+  <div class="field">
+    Password<br />
+    <%= password_field_tag :password %>
+  </div><br />  
+  <div class="field">
+    Project <br/>
+                <%= select_tag "project_id" , options_from_collection_for_select(@projects,:id,:projectname) %>
+  </div>
+  <div class="actions">  <br/>
+   
+   <%= link_to "Log In","#",:onclick=>"javascript:document.forms[0].submit()",:class =>"button blue"%>
+  </div>
+
+ 
+ <%end%>

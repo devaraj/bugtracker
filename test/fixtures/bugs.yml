@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  bugtitle: MyString
+  bugdescription: MyText
+  fileuploadpath: MyString
+  assignedto_user: 
+  assignedby_user: 
+  project: 
+  created_at: 2012-07-06
+  created_by: MyString
+  updated_at: 2012-07-06
+  updated_by: MyString
+
+two:
+  bugtitle: MyString
+  bugdescription: MyText
+  fileuploadpath: MyString
+  assignedto_user: 
+  assignedby_user: 
+  project: 
+  created_at: 2012-07-06
+  created_by: MyString
+  updated_at: 2012-07-06
+  updated_by: MyString

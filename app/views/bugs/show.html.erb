@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Bugtitle:</b>
+  <%= @bug.bugtitle %>
+</p>
+
+<p>
+  <b>Bugdescription:</b>
+  <%= @bug.bugdescription %>
+</p>
+
+<p>
+  <b>Fileuploadpath:</b>
+  <%= @bug.fileuploadpath %>
+</p>
+
+<p>
+  <b>Assignedto user:</b>
+  <%= @bug.assignedto_user.username %>
+</p>
+
+<p>
+  <b>Assignedby user:</b>
+  <%= @bug.assignedby_user.username %>
+</p>
+
+<p>
+  <b>Project:</b>
+  <%= @bug.project.projectname %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%= @bug.created_at %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @bug.created_by %>
+</p>
+
+<p>
+  <b>Updated at:</b>
+  <%= @bug.updated_at %>
+</p>
+
+<p>
+  <b>Updated by:</b>
+  <%= @bug.updated_by %>
+</p>
+
+
+<%= link_to 'Edit', edit_bug_path(@bug) %> |
+<%= link_to 'Back', bugs_path %>

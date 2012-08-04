@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bugtracker</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+<%=javascript_include_tag %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="header" class="true clearfix">
+				<div class="container clearfix">
+					
+					<div style="float: left; width: 210px;">
+						<a href="http://www.invenger.com"><%= image_tag "mini.png" %></a>
+
+					</div>
+					 <% if  session[:user_id] %>
+					<div id="userbox">
+
+						   
+    					<%= session[:username]%>&nbsp;&nbsp; |&nbsp;&nbsp;
+ 						<%=session[:project_name] %> &nbsp;&nbsp; |&nbsp;&nbsp;
+						<%= link_to("Logout",:controller => "login",:action => "logout") %>
+												
+
+					</div>
+					<% end %>
+
+				</div>
+</div>
+				
+	 
+						
+				
+				<div  class="maincontent">
+						
+						<br/>
+						 <br />
+						
+						 <% if  session[:user_id] %>
+						<p id="notice" style="color:green;float:left"><%= notice %></p>
+					<div style="float:right">
+					
+					<table>
+						<tr>
+ 
+							<td>Search</td>
+							<td><%= form_tag ("/bugsearch") do %>
+							<%= text_field_tag  :search %><%= link_to "Search","#",:onclick=>"javascript:document.forms[0].submit()",:class =>"button blue"%></td>
+							<% end %>
+							<td><%= link_to 'New Issuse', new_bug_path ,:class =>"button red"%> </td>
+						</tr>
+					</table>
+					
+					</div>
+					
+						 <br/><br/>
+						<br/>
+					
+					<hr/>
+					<% end %>
+					<div  class="left-sidebar" id="sidebar">
+					<% if  session[:user_id] %>
+					 
+						<a href="#" >
+						<%= link_to 'All Issues', bugs_path %> 
+							  <div ><%= @allissuse%></div>
+						 
+						
+						<br/>
+						<br/>
+						<%= link_to 'Assigned to Me', {:controller=>"bugs",:action=>"assignedme"} %> 
+						<div ><%= @assignedtomeissuse%>
+						
+						</div>
+
+						<br/>
+						<br/>
+						<%= link_to 'Found by Me', {:controller=>"bugs",:action=>"assignedby"} %> 
+						<div ><%= @assignedbymeissuse%>
+						
+						</div>
+						 
+						<hr style="color: #CCCCCC;"/>
+						<% if @labels %>
+					 	<div style="font-weight:normal;width:100%;margin-top:10px;margin-bottom:20px" >
+						
+						<% @labels.each do |label|%>
+						
+						<label class="button <%=label.labelcolor%>" style="width:5%;height:20px;float:left" onclick="javascript:alert("clicked me")">
+						
+						</label>
+						<div style="width:90%" >
+						<div style="float:left">
+						&nbsp;<%=link_to label.labelname ,{:controller=>"bugs",:action=>"labeldefects",:labelid=>label.id}%>
+						</div>
+						 
+
+						<% if @manage_label && label.created_by ==  session[:username] %>
+						<div style="float:right">
+						<%=link_to (image_tag "cross-mini.png"),:controller=>"bugs",:action=>"deletelabel",:labelid=>label.id%>
+						 
+						</div>
+						<% end %>
+
+						</div>
+
+						<br/>
+						<br/>
+						<% end %>
+						</div>
+						<% end %>
+				 
+						<% if @manage_label %>
+					 <div >
+					 
+					  	Create Label:
+					  	<br/>
+						
+							
+						<%=form_tag  createlabel_path,
+    :id => "createlabelform" do %>
+						<%=text_field_tag :labelname%>
+					  	
+					   	<ul  class="labelul">
+				            <li style="color:green;display: inline;background:green">
+				              <label>
+				                <input type="radio" name="labelcolor" value="green" >
+				              </label>
+				            </li>
+				            <li  style="color:blue;display: inline;background:blue" >
+				              <label>
+				                <input type="radio" name="labelcolor" value="blue">
+				              </label>
+				            </li>
+				            <li style="color:orange;display: inline;background:orange">
+				              <label>
+				                <input type="radio" name="labelcolor" value="orange">
+				              </label>
+				            </li>
+				            <li style="color:lightgreen;display: inline;background:lightgreen">
+				              <label>
+				                <input type="radio" name="labelcolor" value="lightgreen">
+				              </label>
+				            </li>
+				            <li style="color:black;display: inline;background:black">
+				              <label>
+				                <input type="radio" name="labelcolor" value="black">
+				              </label>
+				            </li>
+				            <li style="color:gray;display: inline;background:gray">
+			              <label>
+			                <input type="radio" name="labelcolor" value="gray">
+			              </label>
+			            </li>
+			            <li style="color:darkblue;display: inline;background:darkblue">
+			              <label>
+			                <input type="radio" name="labelcolor" value="darkblue">
+			              </label>
+			            </li>
+			            <li style="color:darkred;display: inline;background:darkred">
+			              <label>
+			                <input type="radio" name="labelcolor" value="darkred">
+			              </label>
+			            </li>	
+						 <li style="color:yellow;display: inline;background:yellow">
+				              <label>
+				                <input type="radio" name="labelcolor" value="yellow">
+				              </label>
+				            </li>
+							 <li style="color:red;display: inline;background:red">
+					              <label>
+					                <input type="radio" name="labelcolor" value="red">
+					              </label>
+					            </li>
+       				 </ul>
+					<%= link_to "Create" ,"#",:onclick=>"javascript:document.getElementById('createlabelform').submit()",:class=>"button blue"%>
+					<%= link_to "Cancel", cancellabel_path,:class=>"button blue" %>
+					<% end %>
+					
+					 </div>
+					 <% else %>
+					 <%=link_to "Manage Labels" ,managelabels_path,:class=>"button blue"%>
+					 <% end %>
+					 <%end%>
+					</div>
+					 <% if  session[:user_id] %>
+					<div style="margin-left:20%">
+					<% else %>
+					<div >
+					<% end %>
+						<%= yield %>
+					 </div>
+
+				</div>
+				 
+	 
+</body>
+</html>
